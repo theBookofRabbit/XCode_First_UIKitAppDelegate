@@ -6,14 +6,27 @@
 //
 
 import UIKit
+import SwiftUI
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
+    //下面是请求一些权限，在APP第一次打开的瞬间会出现请求权限框
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, //请求警示
+                                                                          .badge, //请求菜单
+                                                                          .sound],//请求声音
+                                                                completionHandler: {(Success,Error) in
+                                                                    if Success {
+                                                                        print("Success")
+                                                                    }
+                                                                    if Error != nil{
+                                                                        print("error")
+                                                                    }
+                                                                }) //主管发送通知的服务
         return true
     }
 
@@ -34,3 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+struct AppDelegate_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
